@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest; // replace the default request with the extended TaskRequest, which will validate the form request
 use App\Models\Task;
 
 
@@ -20,30 +20,38 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
-    function store(Request $request)
+    function store(TaskRequest $request)
     {
-        return redirect()->route('tasks.index');
+        $task = Task::create($request->validated()); // helper function only fills validated fields. I like it!
+
+        return redirect()->route('tasks.show', ['task' => $task->id])
+            ->with('success', 'Task created successfully.');
     }
 
-    function show($task)
+    function show(Task $task)
     {
         return view('tasks.show', compact('task'));
     }
 
-    function edit($task)
+    function edit(Task $task)
     {
         return view('tasks.edit', compact('task'));
     }
 
-    function update(Request $request, $task)
+    function update(Task $task, TaskRequest $request)
     {
+        $task->update($request->validated());
         return redirect()->route('tasks.show', $task);
     }
 
-    function destroy($id)
+    function destroy(Task $task)
     {
-        $task = Task::findOrfail('id', $id);
         $task->delete();
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task deleted successfully');
+    }
+    function toggleComplete(Task $task)
+    {
+        $task->toggleComplete();
     }
 }

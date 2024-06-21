@@ -1,2 +1,5 @@
-edit task
-<h1>NOW EDITING TASK: {$task->title}}</h1>
+@extends('layouts.template')
+
+@section('content')
+  @include('tasks.form', ['task' => $task])
+@endsection

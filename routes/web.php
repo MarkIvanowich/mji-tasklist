@@ -17,6 +17,8 @@ Route::get('/', function(){
 
 Route::resource('/tasks', TaskController::class);
 
+Route::put('/tasks/{task}/toggle-complete', [TaskController::class, 'toggleComplete'])->name('tasks.toggle-complete');
+
 Route::fallback(function () {
     return "Fallback Route";
 });

@@ -1,3 +1,5 @@
-create task
+@extends('layouts.template')
 
-<a href="{{route('tasks.index')}}">Tasks List</a>
+@section('content')
+  @include('tasks.form')
+@endsection
