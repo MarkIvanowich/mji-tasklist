@@ -7,3 +7,4 @@ tasks index
         <li>There are no tasks!</li>
     @endforelse
 </ul>
+<a href="{{route('tasks.create')}}">Create Task</a>
