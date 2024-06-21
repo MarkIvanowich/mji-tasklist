@@ -53,5 +53,6 @@ class TaskController extends Controller
     function toggleComplete(Task $task)
     {
         $task->toggleComplete();
+        return redirect()->route('tasks.show', $task);
     }
 }
